@@ -11,6 +11,7 @@ namespace CapstoneWebApplication.Subject
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // some test
             if (Session["user_id"] == null) { Response.Redirect("~/Account/Index"); }
         }
 
