@@ -169,10 +169,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ExperimenterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\ConfigurationModel.cs" />
+    <Compile Include="Models\ExamModel.cs" />
+    <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subject\Text.aspx.cs">
       <DependentUpon>Text.aspx</DependentUpon>
@@ -207,6 +211,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\script.js" />
     <Content Include="Subject\Text.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -220,6 +225,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Experimenter\Assign.cshtml" />
+    <Content Include="Views\Experimenter\Configuration.cshtml" />
+    <Content Include="Views\Experimenter\Create.cshtml" />
+    <Content Include="Views\Experimenter\Delete.cshtml" />
+    <Content Include="Views\Experimenter\Details.cshtml" />
+    <Content Include="Views\Experimenter\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

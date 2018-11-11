@@ -26,8 +26,8 @@ namespace WebApplicationCapstone.Controllers
                 User.user_id = 1;
                 Session["user_id"] = User.user_id.ToString();
                 Session["test_message"] = "Hello, team!";
-                //return RedirectToAction("Assign", "Experimenter");
-                return RedirectToAction("Text.aspx", "Subject");
+                return RedirectToAction("Assign", "Experimenter");
+                //return RedirectToAction("Text.aspx", "Subject");
             }
             else
             {

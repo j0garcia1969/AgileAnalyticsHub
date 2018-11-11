@@ -1,0 +1,42 @@
+﻿@model WebApplicationCapstone.Models.TaskModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Task</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SelectedTaskTypeDesc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SelectedTaskTypeDesc)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskItem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TaskItem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SelectedFeedbackTypeDesc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SelectedFeedbackTypeDesc)
+        </dd>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = @Model.ID }, "Experimenter") |
+    @Html.ActionLink("Back to List", "Configuration", "Experimenter")
+</div>
+
