@@ -51,6 +51,12 @@
     <Reference Include="Amazon.S3, Version=0.12.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Amazon.S3.0.12.1\lib\netstandard2.0\Amazon.S3.dll</HintPath>
     </Reference>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>E:\CapstoneProject\Code\CapstoneWebApplication\CapstoneWebApplication\bin\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3">
+      <HintPath>E:\CapstoneProject\Code\CapstoneWebApplication\CapstoneWebApplication\bin\AWSSDK.S3.dll</HintPath>
+    </Reference>
     <Reference Include="Carbon.Json, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Carbon.Json.1.8.0\lib\netstandard2.0\Carbon.Json.dll</HintPath>
     </Reference>
@@ -174,6 +180,14 @@
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subject\S3Uploader.cs" />
+    <Compile Include="Subject\Test_Text.aspx.cs">
+      <DependentUpon>Test_Text.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Subject\Test_Text.aspx.designer.cs">
+      <DependentUpon>Test_Text.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Subject\Text.aspx.cs">
       <DependentUpon>Text.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -207,6 +221,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Subject\Test_Text.aspx" />
     <Content Include="Subject\Text.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
