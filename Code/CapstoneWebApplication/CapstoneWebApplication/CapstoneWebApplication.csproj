@@ -181,13 +181,6 @@
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subject\S3Uploader.cs" />
-    <Compile Include="Subject\Test_Text.aspx.cs">
-      <DependentUpon>Test_Text.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Subject\Test_Text.aspx.designer.cs">
-      <DependentUpon>Test_Text.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Subject\Text.aspx.cs">
       <DependentUpon>Text.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -221,7 +214,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Subject\Test_Text.aspx" />
     <Content Include="Subject\Text.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
