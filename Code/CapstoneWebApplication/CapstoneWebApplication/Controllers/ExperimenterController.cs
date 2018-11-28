@@ -92,6 +92,9 @@ namespace WebApplicationCapstone.Controllers
             configuration.Tasks = Session["config"] as List<Models.TaskModel>;
             Session["config"] = configuration.Tasks;
             Session["edit_task_id"] = 0;
+            Session["task_id"] = 0;
+
+            string test = Session["task_id"].ToString();
 
             configuration.Tasks = Session["config"] as List<Models.TaskModel>;
             string task_type = configuration.Tasks[0].SelectedFeedbackTypeDesc;
@@ -100,8 +103,8 @@ namespace WebApplicationCapstone.Controllers
 
             if (configuration.Tasks[0].SelectedTaskTypeDesc == "Text")
             {
-                return RedirectToAction("Text.aspx", "Subject");
-                //return RedirectToAction("Text", "Subject");
+                //return RedirectToAction("Text.aspx", "Subject");
+                return RedirectToAction("Text", "Subject");
                 //return View("~/Views/Subject/Text", configuration);
             }
 

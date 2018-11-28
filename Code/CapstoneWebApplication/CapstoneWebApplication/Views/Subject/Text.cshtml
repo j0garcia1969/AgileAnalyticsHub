@@ -1,0 +1,392 @@
+﻿@model WebApplicationCapstone.Models.ConfigurationModel
+@{
+    ViewBag.Title = "Text";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    int edit_id = int.Parse(Session["edit_task_id"].ToString());
+    int duration = Model.Tasks[edit_id].Duration;
+    //int duration = 45;
+    var endTime = DateTime.UtcNow.AddSeconds(duration);
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
+}
+<style>
+    input[type=text],
+    input[type=number],
+    select {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    textarea {
+        display: block;
+        width: 100%;
+        height: 100px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+</style>
+
+<h2>Exam</h2>
+
+@*<h4>Task</h4>*@
+<div>
+    Time Remaining:
+    <span id="minRemaining"></span> :
+    <span id="secRemaining"></span>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("NextTask", "Subject", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <dt>
+                    Question @(edit_id + 1)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Tasks[edit_id].TaskItem)
+                </dd>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Tasks[edit_id].TaskResponse)
+                @Html.EditorFor(model => model.Tasks[edit_id].TaskResponse, new { htmlAttributes = new { placeholder = "Place Your Answer Here" } })
+            </div>
+            <div class="form-group">
+                <input id="btn_next" type="submit" value="Next" class="btn btn-default" style="display:none;" />
+            </div>
+        }
+    </div>
+</div>
+<script>
+
+    var remSeconds = @timeRemaining;
+    var secondsCounter = remSeconds % 60;
+
+    function formatNumber(number) {
+        if (number < 10) return '0' + number;
+        else return '' + number;
+    }
+
+    function startTick() {
+        document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+        document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+
+        var _tick = setInterval(function () {
+            if (remSeconds > 0) {
+                remSeconds = remSeconds - 1;
+                secondsCounter = secondsCounter - 1;
+                document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds / 60));
+                document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+
+                if (secondsCounter == 0) {
+                    secondsCounter = 60;
+                }
+            }
+            else {
+                document.getElementById('btn_next').style.display = "block";
+                //alert('Time is up');
+                clearInterval(_tick);
+            }
+        }, 1000);
+    }
+    startTick();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<h2>Text</h2>
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <style>
+            .message-welcome {
+                font-family: 'AR BONNIE';
+                font-size: 80px;
+                text-align: center;
+            }
+
+            input[type=text],
+            input[type=password] {
+                width: 100%;
+                padding: 2px 0px;
+                margin: 0 0;
+                box-sizing: border-box;
+                border: none;
+                /*border-bottom: 1px solid #ccc;*/
+            }
+
+            .textfield-configuration-name {
+                font-family: Arial;
+                font-size: 10px;
+                color: #ccc;
+            }
+
+            .field-validation-error {
+                font-family: Arial;
+                font-size: 10px;
+                color: red;
+            }
+
+            .button-login {
+                width: 100%;
+                border-radius: 8px;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                background-color: #37b3e8;
+                color: #fff;
+                border: 2px solid #37b3e8;
+            }
+
+                .button-login:hover {
+                    border: 2px solid gray;
+                    background-color: #ccc;
+                    color: #333;
+                }
+
+            .container-center {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -moz-transform: translateX(-50%) translateY(-50%);
+                -webkit-transform: translateX(-50%) translateY(-50%);
+                transform: translateX(-50%) translateY(-50%);
+            }
+        </style>
+    </head>
+    <body>
+        <h4>Task</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                @using (Html.BeginForm("NextTask", "Subject", FormMethod.Post))
+                {
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div>
+                        Time Remaining:
+                        <span id="minRemaining"></span> :
+                        <span id="secRemaining"></span>
+                    </div>
+                    <div class="form-group">
+                        <div>Question @edit_id</div>
+                        @Html.DisplayFor(modelItem => Model.Tasks[edit_id].TaskItem)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Tasks[edit_id].TaskResponse)
+                        @Html.TextAreaFor(model => model.Tasks[edit_id].TaskResponse, new { htmlAttributes = new { placeholder = "Task Item" } })
+                    </div>
+                    <div class="form-group">
+                        <input id="btn_next" type="submit" value="Next" class="btn btn-default" style="display:none;" />
+                    </div>
+                }
+            </div>
+        </div>
+    </body>
+    </html>
+
+    <script>
+
+        var remSeconds = @timeRemaining;
+        var secondsCounter = remSeconds % 60;
+
+        function formatNumber(number) {
+            if (number < 10) return '0' + number;
+            else return '' + number;
+        }
+
+        function startTick() {
+            document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+            document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+
+            var _tick = setInterval(function () {
+                if (remSeconds > 0) {
+                    remSeconds = remSeconds - 1;
+                    secondsCounter = secondsCounter - 1;
+                    document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds / 60));
+                    document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+
+                    if (secondsCounter == 0) {
+                        secondsCounter = 60;
+                    }
+                }
+                else {
+                    document.getElementById('btn_next').style.display = "block";
+                    //alert('Time is up');
+                    clearInterval(_tick);
+                }
+            }, 1000);
+        }
+        startTick();
+    </script>*@
+
+
+
+
+
+
+
+@*@using (Html.BeginForm("NextTask", "Subject", FormMethod.Post))
+    {
+        @Html.DisplayFor(modelItem => Model.Tasks[edit_id].TaskItem)
+
+        <div class="form-group">
+            <input id="btn_next" type="submit" value="Next" class="btn btn-default" style="display:none;" />
+        </div>
+    }*@
