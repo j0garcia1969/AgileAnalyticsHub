@@ -31,15 +31,6 @@ namespace CapstoneWebApplication.Subject {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// s3Placeholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label s3Placeholder;
-        
-        /// <summary>
         /// Label_Value control.
         /// </summary>
         /// <remarks>
@@ -85,22 +76,22 @@ namespace CapstoneWebApplication.Subject {
         protected global::System.Web.UI.WebControls.Literal litMsg;
         
         /// <summary>
-        /// TextBox1 control.
+        /// inputResponse control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea inputResponse;
         
         /// <summary>
-        /// Button1 control.
+        /// Save_Button control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button Save_Button;
         
         /// <summary>
         /// NextButton control.
