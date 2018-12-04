@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapstoneWebApplication;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,16 @@ namespace WebApplicationCapstone.Controllers
         // GET: Experimenter
         public ActionResult Assign(Models.ExamModel exam)
         {
+            HandlerCSV handlerCSV = new HandlerCSV();
+
+            string filePath = Server.MapPath("~/App_Data/exam_load.csv");
+            IEnumerable<SelectListItem> exam_category_studies = handlerCSV.CSVtoList(filePath, "study","");
+            //////List<string> exam_category_studies = handlerCSV.CSVtoList(filePath, "study").Distinct().ToList();
+            //////ViewBag.exam_category_studies_unique = new SelectList(exam_category_studies, "value", "text");
+            //Session["exam"] = exam_category_studies;
+            exam.StudyType = exam_category_studies;
+            Session["study_list"] = exam_category_studies;
+
             return View("Assign", exam);
         }
 
@@ -87,8 +98,12 @@ namespace WebApplicationCapstone.Controllers
         }
 
         [HttpPost]
-        public ActionResult AssignConfiguration(Models.ConfigurationModel configuration)
+        public ActionResult AssignConfiguration(Models.ConfigurationModel configuration, Models.ExamModel exam)
         {
+
+            int study_id = exam.SelectedStudyID;
+
+
             configuration.Tasks = Session["config"] as List<Models.TaskModel>;
             Session["config"] = configuration.Tasks;
             Session["edit_task_id"] = 0;
@@ -180,45 +195,110 @@ namespace WebApplicationCapstone.Controllers
             return View("Configuration", configuration);
         }
 
+        [HttpPost]
+        public ActionResult PopulateListGroup(Models.ExamModel exam)
+        {
+
+            int study_id = exam.SelectedStudyID;
+            exam.StudyType = Session["study_list"] as IEnumerable<SelectListItem>;
+
+            string study_desc = exam.StudyType.ToArray()[study_id - 1].Text;
+            string key_desc = study_desc;
+
+            string filePath = Server.MapPath("~/App_Data/exam_load.csv");
+            HandlerCSV handlerCSV = new HandlerCSV();
+            IEnumerable<SelectListItem> exam_category_group = handlerCSV.CSVtoList(filePath, "group", key_desc);
+
+            exam.GroupType = exam_category_group;
+
+            Session["study_id"] = study_id;
+            Session["group_list"] = exam_category_group;
+
+            return View("Assign", exam);
+        }
+        
+        [HttpPost]
+        public ActionResult PopulateListSubject(Models.ExamModel exam)
+        {
+            
+            int study_id = int.Parse(Session["study_id"].ToString());
+            int group_id = exam.SelectedGroupID;
+
+            exam.StudyType = Session["study_list"] as IEnumerable<SelectListItem>;
+            exam.GroupType = Session["group_list"] as IEnumerable<SelectListItem>;
+
+            string study_desc = exam.StudyType.ToArray()[study_id - 1].Text;
+            string group_desc = exam.GroupType.ToArray()[group_id - 1].Text;
+            string key_desc = study_desc + "," + group_desc;
+
+            HandlerCSV handlerCSV = new HandlerCSV();
+            string filePath = Server.MapPath("~/App_Data/exam_load.csv");
+            IEnumerable<SelectListItem> exam_category_subjects = handlerCSV.CSVtoList(filePath, "subject", key_desc);
+
+            exam.SelectedStudyID = study_id;
+            exam.SubjectType = exam_category_subjects;
+
+            Session["group_id"] = group_id;
+            Session["subject_list"] = exam_category_subjects;
+
+            return View("Assign", exam);
+        }
+
+        [HttpPost]
+        public ActionResult PopulateListSession(Models.ExamModel exam)
+        {
+
+            int study_id = int.Parse(Session["study_id"].ToString());
+            int group_id = int.Parse(Session["group_id"].ToString());
+            int subject_id = exam.SelectedSubjectID;
+
+            exam.StudyType = Session["study_list"] as IEnumerable<SelectListItem>;
+            exam.GroupType = Session["group_list"] as IEnumerable<SelectListItem>;
+            exam.SubjectType = Session["subject_list"] as IEnumerable<SelectListItem>;
+
+            string study_desc = exam.StudyType.ToArray()[study_id - 1].Text;
+            string group_desc = exam.GroupType.ToArray()[group_id - 1].Text;
+            string subject_desc = exam.SubjectType.ToArray()[subject_id - 1].Text;
+
+            string key_desc = study_desc + "," + group_desc + "," + subject_desc;
+
+            HandlerCSV handlerCSV = new HandlerCSV();
+            string filePath = Server.MapPath("~/App_Data/exam_load.csv");
+            IEnumerable<SelectListItem> exam_category_sessions = handlerCSV.CSVtoList(filePath, "session", key_desc);
+
+            exam.SelectedStudyID = study_id;
+            exam.SelectedGroupID = group_id;
+            exam.SessionType = exam_category_sessions;
+            Session["session_list"] = exam_category_sessions;
+
+            return View("Assign", exam);
+        }
+
         public void ExportToCSV()
         {
-        //[DisplayName("Task Type")]
-        //public int SelectedTaskTypeID { get; set; }
-        //[DisplayName("Task Type")]
-        //public string SelectedTaskTypeDesc { get; set; }
-        //public IEnumerable<SelectListItem> TaskTypes { get; set; } = task_type;
 
-        //[DisplayName("Task Item")]
-        //public string TaskItem { get; set; }
-        //[DisplayName("Duration")]
-        //public int Duration { get; set; }
-
-        //[DisplayName("Feedback Type")]
-        //public int SelectedFeedbackTypeID { get; set; }
-        //[DisplayName("Feedback Type")]
-        //public string SelectedFeedbackTypeDesc { get; set; }
-        //public IEnumerable<SelectListItem> FeedbackTypes { get; set; } = feedback_type;
-
-        StringWriter sw = new StringWriter();
-            sw.WriteLine("\"ID\",\"Task Type\",\"Task Item\",\"Duration\",\"Feedback Type\"");
+            //StringWriter sw = new StringWriter();
+            //sw.WriteLine("\"ID\",\"Task Type\",\"Task Item\",\"Duration\",\"Feedback Type\"");
 
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment; filename=ExportedList.csv");
             Response.ContentType = "text/csv";
 
             var configuration = Session["config"] as List<Models.TaskModel>;
+            HandlerCSV handlerCSV = new HandlerCSV();
+            string sw = handlerCSV.ExportToCSV(configuration);
 
-            for (int i=0; i < configuration.Count; i++)
-            {
-                sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
-                    i,
-                    configuration[i].SelectedTaskTypeDesc,
-                    configuration[i].TaskItem,
-                    configuration[i].Duration,
-                    configuration[i].SelectedFeedbackTypeDesc
-                    ));
-            }
-            Response.Write(sw.ToString());
+            //for (int i=0; i < configuration.Count; i++)
+            //{
+            //    sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
+            //        i,
+            //        configuration[i].SelectedTaskTypeDesc,
+            //        configuration[i].TaskItem,
+            //        configuration[i].Duration,
+            //        configuration[i].SelectedFeedbackTypeDesc
+            //        ));
+            //}
+            Response.Write(sw);
             Response.End();
 
         }

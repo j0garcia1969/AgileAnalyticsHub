@@ -56,32 +56,43 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("AssignConfiguration", "Experimenter", FormMethod.Post))
+        @using (Html.BeginForm("PopulateListGroup", "Experimenter", FormMethod.Post))
         {
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 @Html.LabelFor(model => model.SelectedStudyID)
-                @Html.DropDownListFor(model => model.SelectedStudyID, new SelectList(Model.StudyType, "value", "text"))
+                @Html.DropDownListFor(model => model.SelectedStudyID, new SelectList(Model.StudyType, "value", "text"), "-- Select Study --", new { @class = "form-control", @onchange = "form.submit();" })
+                @*@Html.DropDownListFor(model => model.SelectedStudyID, new SelectList(Model.StudyType, "value", "text"))*@
             </div>
+        }
+        @using (Html.BeginForm("PopulateListSubject", "Experimenter", FormMethod.Post))
+        {
             <div class="form-group">
                 @Html.LabelFor(model => model.SelectedGroupID)
-                @Html.DropDownListFor(model => model.SelectedGroupID, new SelectList(Model.GroupType, "value", "text"))
+                @Html.DropDownListFor(model => model.SelectedGroupID, new SelectList(Model.GroupType, "value", "text"), "-- Select Group --", new { @class = "form-control", @onchange = "form.submit();" })
             </div>
+        }
+        @using (Html.BeginForm("PopulateListSession", "Experimenter", FormMethod.Post))
+        {
             <div class="form-group">
                 @Html.LabelFor(model => model.SelectedSubjectID)
-                @Html.DropDownListFor(model => model.SelectedSubjectID, new SelectList(Model.SubjectType, "value", "text"))
+                @Html.DropDownListFor(model => model.SelectedSubjectID, new SelectList(Model.SubjectType, "value", "text"), "-- Select Subject --", new { @class = "form-control", @onchange = "form.submit();" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.SelectedConfigurationID)
-                @Html.DropDownListFor(model => model.SelectedConfigurationID, new SelectList(Model.ConfigurationType, "value", "text"))
+                @Html.LabelFor(model => model.SelectedSessionID)
+                @Html.DropDownListFor(model => model.SelectedSessionID, new SelectList(Model.SessionType, "value", "text"), "-- Select Session --", new { @class = "form-control" })
             </div>
-
+        }
+        @using (Html.BeginForm("AssignConfiguration", "Experimenter", FormMethod.Post))
+        {
             <div class="form-group">
                 <input type="submit" value="Assign" class="btn btn-default" />
                 @*<input type="submit" value="Create New Config" class="btn btn-default" />*@
             </div>
-            @Html.ActionLink("Create New Configuration", "Configuration", "Experimenter")
-            @Html.ActionLink("Export To CSV", "ExportToCSV")
         }
+        @Html.ActionLink("Create New Configuration", "Configuration", "Experimenter")
+        &nbsp;
+        &nbsp;
+        @Html.ActionLink("Export To CSV", "ExportToCSV")
     </div>
 </div>

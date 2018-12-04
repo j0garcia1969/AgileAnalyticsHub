@@ -80,7 +80,7 @@
                 @Html.EditorFor(model => model.Tasks[edit_id].TaskResponse, new { htmlAttributes = new { placeholder = "Place Your Answer Here" } })
             </div>
             <div class="form-group">
-                <input id="btn_next" type="submit" value="Next" class="btn btn-default" style="display:none;" />
+                <input id="btn_next" type="submit" value="Next" class="btn btn-default" style="display:block;" />
             </div>
         }
     </div>
@@ -111,7 +111,8 @@
                 }
             }
             else {
-                document.getElementById('btn_next').style.display = "block";
+                //document.getElementById('btn_next').style.display = "block";
+                document.getElementById('btn_next').click();
                 //alert('Time is up');
                 clearInterval(_tick);
             }
