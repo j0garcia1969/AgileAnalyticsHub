@@ -286,8 +286,6 @@ C:\Users\BeCars\Documents\_development\repo_bitbucket\Code\CapstoneWebApplicatio
 C:\Users\BeCars\Documents\_development\repo_bitbucket\Code\CapstoneWebApplication\CapstoneWebApplication\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\BeCars\Documents\_development\repo_bitbucket\Code\CapstoneWebApplication\CapstoneWebApplication\bin\System.Text.Encodings.Web.xml
 C:\Users\BeCars\Documents\_development\repo_bitbucket\Code\CapstoneWebApplication\CapstoneWebApplication\bin\System.Threading.Tasks.Extensions.xml
-C:\Users\BeCars\Documents\_development\repo_bitbucket\Code\CapstoneWebApplication\CapstoneWebApplication\bin\AWSSDK.Core.dll
-C:\Users\BeCars\Documents\_development\repo_bitbucket\Code\CapstoneWebApplication\CapstoneWebApplication\bin\AWSSDK.S3.dll
 C:\Users\BeCars\Documents\_development\repo_bitbucket\Code\CapstoneWebApplication\CapstoneWebApplication\bin\AWSSDK.Core.pdb
 C:\Users\BeCars\Documents\_development\repo_bitbucket\Code\CapstoneWebApplication\CapstoneWebApplication\bin\AWSSDK.Core.xml
 C:\Users\BeCars\Documents\_development\repo_bitbucket\Code\CapstoneWebApplication\CapstoneWebApplication\bin\AWSSDK.S3.pdb

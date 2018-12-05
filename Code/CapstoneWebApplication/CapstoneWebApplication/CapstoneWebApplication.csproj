@@ -176,6 +176,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ExperimenterController.cs" />
+    <Compile Include="Models\App_Code_Handlers\S3Uploader.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -183,8 +185,9 @@
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\ExamModel.cs" />
     <Compile Include="Models\TaskModel.cs" />
+    <Compile Include="Models\App_Code_Handlers\HandlerCSV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Subject\S3Uploader.cs" />
+    <Compile Include="Subject\S3UploaderArchived.cs" />
     <Compile Include="Subject\Text.aspx.cs">
       <DependentUpon>Text.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -207,6 +210,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\exam_load.csv" />
+    <Content Include="App_Data\exam_responses.csv" />
+    <Content Include="App_Data\exam_configuration.csv" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -238,9 +244,11 @@
     <Content Include="Views\Experimenter\Delete.cshtml" />
     <Content Include="Views\Experimenter\Details.cshtml" />
     <Content Include="Views\Experimenter\Edit.cshtml" />
+    <Content Include="Views\Subject\Text.cshtml" />
+    <Content Include="Views\Subject\Complete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Code\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
