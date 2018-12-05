@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebApplicationCapstone.Models;
 
-namespace CapstoneWebApplication
+namespace WebApplicationCapstone.Controllers
 {
     public class HandlerCSV
     {
@@ -156,36 +157,24 @@ namespace CapstoneWebApplication
             return index;
         }
 
-        public string ExportToCSV(List<TaskModel> configuration)
+        public void ExportToCSV(string path, List<TaskModel> configuration)
         {
-
-            StringWriter sw = new StringWriter();
-            sw.WriteLine("\"ID\",\"Task Type\",\"Task Item\",\"Duration\",\"Feedback Type\"");
-
-            //Response.ClearContent();
-            //Response.AddHeader("content-disposition", "attachment; filename=ExportedList.csv");
-            //Response.ContentType = "text/csv";
-
-            //var configuration = Session["config"] as List<Models.TaskModel>;
+            var csv = new StringBuilder();
 
             for (int i = 0; i < configuration.Count; i++)
             {
-                sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
-                    i,
-                    configuration[i].SelectedTaskTypeDesc,
-                    configuration[i].TaskItem,
-                    configuration[i].Duration,
-                    configuration[i].SelectedFeedbackTypeDesc
-                    ));
+                var newLine = string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
+                   i,
+                   configuration[i].SelectedTaskTypeDesc,
+                   configuration[i].TaskItem,
+                   configuration[i].Duration,
+                   configuration[i].SelectedFeedbackTypeDesc,
+                   configuration[i].TaskResponse
+                   );
+                csv.AppendLine(newLine);
             }
 
-            return sw.ToString();
-            //Response.Write(sw.ToString());
-            //Response.End();
-
+            File.WriteAllText(path, csv.ToString());
         }
-
-
-
     }
 }

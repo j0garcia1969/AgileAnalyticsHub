@@ -274,19 +274,52 @@ namespace WebApplicationCapstone.Controllers
             return View("Assign", exam);
         }
 
-        public void ExportToCSV()
+        //public ActionResult ConfigurationExport(Models.ExamModel exam)
+        //{
+
+        //    //StringWriter sw = new StringWriter();
+        //    //sw.WriteLine("\"ID\",\"Task Type\",\"Task Item\",\"Duration\",\"Feedback Type\"");
+
+        //    //Response.ClearContent();
+        //    //Response.AddHeader("content-disposition", "attachment; filename=ExportedList.csv");
+        //    //Response.ContentType = "text/csv";
+
+        //    var configuration = Session["config"] as List<Models.TaskModel>;
+        //    HandlerCSV handlerCSV = new HandlerCSV();
+        //    string path = Server.MapPath("~/App_Data/exam_configuration.csv");
+        //    string sw = handlerCSV.ExportToCSV(path, configuration);
+
+        //    //for (int i=0; i < configuration.Count; i++)
+        //    //{
+        //    //    sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
+        //    //        i,
+        //    //        configuration[i].SelectedTaskTypeDesc,
+        //    //        configuration[i].TaskItem,
+        //    //        configuration[i].Duration,
+        //    //        configuration[i].SelectedFeedbackTypeDesc
+        //    //        ));
+        //    //}
+        //    Response.Write(sw);
+        //    //Response.End();
+
+        //    View("Assign", exam);
+
+        //}
+
+        public ActionResult ConfigurationExport(Models.ConfigurationModel configuration)
         {
 
             //StringWriter sw = new StringWriter();
             //sw.WriteLine("\"ID\",\"Task Type\",\"Task Item\",\"Duration\",\"Feedback Type\"");
 
-            Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment; filename=ExportedList.csv");
-            Response.ContentType = "text/csv";
+            //Response.ClearContent();
+            //Response.AddHeader("content-disposition", "attachment; filename=ExportedList.csv");
+            //Response.ContentType = "text/csv";
 
-            var configuration = Session["config"] as List<Models.TaskModel>;
+            configuration.Tasks = Session["config"] as List<Models.TaskModel>;
             HandlerCSV handlerCSV = new HandlerCSV();
-            string sw = handlerCSV.ExportToCSV(configuration);
+            string filepath = Server.MapPath("~/App_Data/exam_configuration.csv");
+            handlerCSV.ExportToCSV(filepath, configuration.Tasks);
 
             //for (int i=0; i < configuration.Count; i++)
             //{
@@ -298,54 +331,10 @@ namespace WebApplicationCapstone.Controllers
             //        configuration[i].SelectedFeedbackTypeDesc
             //        ));
             //}
-            Response.Write(sw);
-            Response.End();
+            //Response.Write(sw);
+            //Response.End();
 
+            return View("Configuration", configuration);
         }
     }
 }
-
-
-
-// CSV Reader in Visual Studio (John)
-// Write to CSV (Kaleigh).
-
-// Login
-// Create or Select Existing
-// Display Task List
-// Submit
-// Go to Subject
-
-
-
-
-
-
-
-//public class Location
-//{
-//    //properties here that describe a location
-//}
-
-//public class CsvHelperLocationRepository : ILocationRepository
-//{
-//    private readonly string _dataFileLocation;
-
-//    public CsvHelperLocationRepository(string dataFileLocation)
-//    {
-//        _dataFileLocation = dataFileLocation;
-//    }
-
-//    public List<Location> GetLocations()
-//    {
-//        //use CsvHelper here to parse the CSV file and generate a list of Location objects to return
-//        List<Location> something = new List<Location>();
-//        return something;
-
-//    }
-//}
-
-//public interface ILocationRepository
-//{
-//    List<Location> GetLocations();
-//}

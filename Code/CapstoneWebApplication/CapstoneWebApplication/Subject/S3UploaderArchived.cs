@@ -9,7 +9,7 @@ using System.IO;
 
 namespace CapstoneWebApplication
 {
-    public class S3Uploader
+    public class S3UploaderArchived
     {
         private string bucketName = "capstone.uhcl";
         private string keyName = "Problem1.csv";

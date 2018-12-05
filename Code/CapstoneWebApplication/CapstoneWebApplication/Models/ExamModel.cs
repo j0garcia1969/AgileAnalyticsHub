@@ -9,17 +9,13 @@ namespace WebApplicationCapstone.Models
 {
     public class ExamModel
     {
-        //private static IEnumerable<SelectListItem> study_type = new SelectList(
-        //    new List<Object> {
-        //        new { value = 0, text = ""},
-        //        new { value = 1, text = "Study 1"}, new { value = 2, text = "Study 2"},
-        //        new { value = 3, text = "Study 3"}, new { value = 4, text = "Study 4"},
-        //        new { value = 5, text = "Study 5"}, new { value = 6, text = "Study 6"},
-        //        new { value = 7, text = "Study 7"}, new { value = 8, text = "Study 8"}
-        //    },
-        //    "value",
-        //    "text"
-        //);
+        private static IEnumerable<SelectListItem> study_type = new SelectList(
+            new List<Object> {
+                new { value = 0, text = ""}
+            },
+            "value",
+            "text"
+        );
         private static IEnumerable<SelectListItem> group_type = new SelectList(
             new List<Object> {
                 new { value = 0, text = ""}

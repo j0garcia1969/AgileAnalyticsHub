@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -10,5 +11,8 @@ namespace WebApplicationCapstone.Models
     {
         public string Name { get; set; } = "CONFIG_NAME_UNKNOWN";
         public List<TaskModel> Tasks { get; set; } = new List<TaskModel>();
+
+        //[DisplayName("Response")]
+        //public string TaskResponse { get; set; } = "";
     }
 }

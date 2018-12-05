@@ -49,5 +49,11 @@ namespace WebApplicationCapstone.Models
 
         [DisplayName("Response")]
         public string TaskResponse { get; set; } = "";
+
+        // Ramanjit's Edits: 
+        // Kaleigh's Comment: What information does this variable hold?
+        //List<TaskModel> outputs = new List<TaskModel>();
+        //[DisplayName("Is Enabled")]
+        //public bool? IsEnabled { get; set; }
     }
 }

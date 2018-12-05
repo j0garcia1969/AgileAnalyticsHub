@@ -190,7 +190,7 @@ namespace CapstoneWebApplication.Subject
         protected void Save_Button_Click(object sender, EventArgs e)
         {
             SaveText();
-            S3Uploader s3 = new S3Uploader();
+            S3UploaderArchived s3 = new S3UploaderArchived();
             s3.UploadFile();
         }
 
