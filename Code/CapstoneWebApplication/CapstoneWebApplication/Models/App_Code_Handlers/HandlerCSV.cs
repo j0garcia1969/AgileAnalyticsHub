@@ -161,6 +161,17 @@ namespace WebApplicationCapstone.Controllers
         {
             var csv = new StringBuilder();
 
+            var header = string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
+                   "ID",
+                   "Task Type",
+                   "Task Content",
+                   "Duration",
+                   "Feedback Type",
+                   "Task Response"
+                   );
+
+            csv.AppendLine(header);
+
             for (int i = 0; i < configuration.Count; i++)
             {
                 var newLine = string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",

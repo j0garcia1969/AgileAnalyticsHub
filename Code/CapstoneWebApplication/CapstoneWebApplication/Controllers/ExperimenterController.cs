@@ -1,4 +1,7 @@
-﻿using CapstoneWebApplication;
+﻿using Amazon.S3;
+using Amazon.S3.Model;
+using Amazon.S3.Transfer;
+using CapstoneWebApplication;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,7 +66,7 @@ namespace WebApplicationCapstone.Controllers
             int type_id = task_components.SelectedTaskTypeID;
             string type_desc = task_components.TaskTypes.ToArray()[type_id].Text;
             string task = task_components.TaskItem;
-            int duration = task_components.Duration;
+            TimeSpan duration = task_components.Duration;
             int feedback_id = task_components.SelectedFeedbackTypeID;
             string feedback_type_desc = task_components.TaskTypes.ToArray()[feedback_id].Text;
 
@@ -113,7 +116,7 @@ namespace WebApplicationCapstone.Controllers
 
             configuration.Tasks = Session["config"] as List<Models.TaskModel>;
             string task_type = configuration.Tasks[0].SelectedFeedbackTypeDesc;
-            int duration = configuration.Tasks[0].Duration;
+            TimeSpan duration = configuration.Tasks[0].Duration;
             string task_item = configuration.Tasks[0].TaskItem;
 
             if (configuration.Tasks[0].SelectedTaskTypeDesc == "Text")
@@ -121,6 +124,10 @@ namespace WebApplicationCapstone.Controllers
                 //return RedirectToAction("Text.aspx", "Subject");
                 return RedirectToAction("Text", "Subject");
                 //return View("~/Views/Subject/Text", configuration);
+            }
+            if (configuration.Tasks[0].SelectedTaskTypeDesc == "Video")
+            {
+                return RedirectToAction("Video", "Subject");
             }
 
             return View("Configuration", configuration);
@@ -135,7 +142,7 @@ namespace WebApplicationCapstone.Controllers
             int type_id = task_components.SelectedTaskTypeID;
             string type_desc = task_components.TaskTypes.ToArray()[type_id].Text;
             string task = task_components.TaskItem;
-            int duration = task_components.Duration;
+            TimeSpan duration = task_components.Duration;
             int feedback_id = task_components.SelectedFeedbackTypeID;
             string feedback_type_desc = task_components.TaskTypes.ToArray()[feedback_id].Text;
 
@@ -274,6 +281,36 @@ namespace WebApplicationCapstone.Controllers
             return View("Assign", exam);
         }
 
+        [HttpPost]
+        public ActionResult PopulateListConfiguration(Models.ExamModel exam)
+        {
+
+            int study_id = int.Parse(Session["study_id"].ToString());
+            int group_id = int.Parse(Session["group_id"].ToString());
+            int subject_id = exam.SelectedSubjectID;
+
+            exam.StudyType = Session["study_list"] as IEnumerable<SelectListItem>;
+            exam.GroupType = Session["group_list"] as IEnumerable<SelectListItem>;
+            exam.SubjectType = Session["subject_list"] as IEnumerable<SelectListItem>;
+
+            string study_desc = exam.StudyType.ToArray()[study_id - 1].Text;
+            string group_desc = exam.GroupType.ToArray()[group_id - 1].Text;
+            string subject_desc = exam.SubjectType.ToArray()[subject_id - 1].Text;
+
+            string key_desc = study_desc + "," + group_desc + "," + subject_desc;
+
+            HandlerCSV handlerCSV = new HandlerCSV();
+            string filePath = Server.MapPath("~/App_Data/exam_load.csv");
+            IEnumerable<SelectListItem> exam_category_sessions = handlerCSV.CSVtoList(filePath, "session", key_desc);
+
+            exam.SelectedStudyID = study_id;
+            exam.SelectedGroupID = group_id;
+            exam.SessionType = exam_category_sessions;
+            Session["session_list"] = exam_category_sessions;
+
+            return View("Assign", exam);
+        }
+
         //public ActionResult ConfigurationExport(Models.ExamModel exam)
         //{
 
@@ -333,6 +370,103 @@ namespace WebApplicationCapstone.Controllers
             //}
             //Response.Write(sw);
             //Response.End();
+
+            return View("Configuration", configuration);
+        }
+
+
+        [HttpPost]
+        public ActionResult AssignConfiguration2(Models.ConfigurationModel configuration, Models.ExamModel exam)
+        {
+
+            string filepath = Server.MapPath("~/App_Data/");
+            string bucket_name = "capstudy1";
+            TransferUtility fileTransferUtility = new TransferUtility(new AmazonS3Client(Amazon.RegionEndpoint.USEast1));
+
+            //string accessKey = "";
+            //string secretKey = "";
+
+            //string filepath_dest = Path.Combine(filepath, "test_file.csv");
+            //using (StreamWriter _testData = new StreamWriter(filepath_dest, true))
+            //{
+            //    for (int i = 0; i < 4; i++)
+            //    {
+            //        var newLine = string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
+            //           3,
+            //           "hello",
+            //           "world",
+            //           "of",
+            //           "mystery",
+            //           "!"
+            //           );
+            //        //csv.AppendLine(newLine);
+            //        _testData.WriteLine(newLine); // Write the file.
+            //    }
+
+            //}
+
+            //// Get file from AWS S3 bucket.
+            //string filepath_aws = "exam_configuration.csv";
+            //string filepath_dest = Path.Combine(filepath, "temp_exam_configuration.csv");
+            //using (AmazonS3Client client = new AmazonS3Client(Amazon.RegionEndpoint.USEast1))
+            //{
+            //    Amazon.S3.Model.GetObjectRequest request = new Amazon.S3.Model.GetObjectRequest
+            //    {
+            //        BucketName = bucket_name,
+            //        Key = filepath_aws
+            //    };
+            //    try
+            //    {
+            //        using (GetObjectResponse response = client.GetObject(request))
+            //        {
+            //            if (!System.IO.File.Exists(filepath_dest))
+            //            {
+            //                response.WriteResponseStreamToFile(filepath_dest);
+            //            }
+            //        }
+            //    }
+            //    catch (Amazon.S3.AmazonS3Exception ex)
+            //    {
+            //        if (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            //            //return false;
+
+            //            //status wasn't not found, so throw the exception
+            //            throw;
+            //    }
+            //}
+
+
+            //// Upload a file to AWS S3 bucket.
+            //filepath = Server.MapPath("~/App_Data/exam_configuration.csv");
+            ///* Upload the file(file name is taken as the object key name). */
+            //try
+            //{
+            //    fileTransferUtility.Upload(filepath, bucket_name);
+            //}
+            //catch (Exception ex)
+            //{
+            //    //System.Windows.Forms.MessageBox.Show(ex.Message);
+            //}
+
+            ///* Set the file storage class and the sharing type*/
+            //TransferUtilityUploadRequest fileTransferUtilityRequest = new TransferUtilityUploadRequest
+            //{
+            //    BucketName = bucket_name,
+            //    FilePath = filepath,
+            //    StorageClass = S3StorageClass.Standard,
+            //    CannedACL = S3CannedACL.PublicReadWrite,
+            //    ContentType = "application/vnd.ms-excel"
+
+            //};
+            //try
+            //{
+            //    //fileTransferUtility.Upload(fileTransferUtilityRequest);
+            //    fileTransferUtility.UploadAsync(fileTransferUtilityRequest);
+            //}
+            //catch
+            //{
+            //    //return false;
+            //}
 
             return View("Configuration", configuration);
         }

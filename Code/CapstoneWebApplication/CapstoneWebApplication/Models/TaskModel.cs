@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -38,8 +39,11 @@ namespace WebApplicationCapstone.Models
         
         [DisplayName("Task Item")]
         public string TaskItem { get; set; }
-        [DisplayName("Duration")]
-        public int Duration { get; set; }
+        [DisplayName("Additional Instructions")]
+        public string TaskAdditionalNotes { get; set; } = "";
+        [DisplayName("Duration (HH:MM:SS)")]
+        [DisplayFormat(DataFormatString = "{0:hh\\:mm\\:ss}", ApplyFormatInEditMode = true)]
+        public TimeSpan Duration { get; set; }
 
         [DisplayName("Feedback Type")]
         public int SelectedFeedbackTypeID { get; set; }

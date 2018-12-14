@@ -1,0 +1,151 @@
+﻿@model WebApplicationCapstone.Models.TaskModel
+@{
+    ViewBag.Title = "Video";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    int edit_id = int.Parse(Session["edit_task_id"].ToString());
+    int duration = int.Parse(Model.Duration.TotalSeconds.ToString());
+    //int duration = 60;
+    var endTime = DateTime.UtcNow.AddSeconds(duration);
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
+}
+<style>
+
+    .task-question-header {
+        /*font-family: 'AR BONNIE';*/
+        font-size: 14px;
+        font-weight: bold;
+        /*text-align: center;*/
+    }
+
+    .task-question {
+        /*font-family: 'AR BONNIE';*/
+        font-size: 13px;
+        /*text-align: center;*/
+    }
+
+    .task-additional-text {
+        /*font-family: 'AR BONNIE';*/
+        font-size: 12px;
+        /*text-align: center;*/
+    }
+
+    input[type=text],
+    input[type=number],
+    select {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+    textarea {
+        display: block;
+        width: 100%;
+        height: 100px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+</style>
+
+<h2>Exam</h2>
+
+@*<h4>Task</h4>*@
+<div>
+    Time Remaining:
+    <span id="minRemaining"></span> :
+    <span id="secRemaining"></span>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("NextTask", "Subject", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <div class="task-question-header">
+                    Question @(edit_id + 1)
+                </div>
+                <div class="task-additional-text">
+                    @Html.DisplayFor(model => model.TaskAdditionalNotes)
+                </div>
+                <br>
+                <iframe width="560" height="315" src=@Url.Content(Model.TaskItem) frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                @*<div class="task-question">
+                    @Html.DisplayFor(model => model.TaskItem)
+                </div>*@
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TaskResponse)
+                @Html.EditorFor(model => model.TaskResponse, new { htmlAttributes = new { placeholder = "Place Your Answer Here" } })
+            </div>
+            <div class="form-group">
+                <input id="btn_next" type="submit" value="Next" class="btn btn-default" style="display:block;" />
+            </div>
+        }
+    </div>
+</div>
+<script>
+
+    var remSeconds = @timeRemaining;
+    var secondsCounter = remSeconds % 60;
+
+    function formatNumber(number) {
+        if (number < 10) return '0' + number;
+        else return '' + number;
+    }
+
+    function startTick() {
+        document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+        document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+
+        var _tick = setInterval(function () {
+            if (remSeconds > 0) {
+                remSeconds = remSeconds - 1;
+                secondsCounter = secondsCounter - 1;
+
+                if (secondsCounter < 0) { secondsCounter = remSeconds % 60; }
+
+                document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds / 60));
+                document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+
+                if (secondsCounter == 0) {
+                    secondsCounter = 60;
+                }
+            }
+            else {
+                //document.getElementById('btn_next').style.display = "block";
+                document.getElementById('btn_next').click();
+                //alert('Time is up');
+                clearInterval(_tick);
+            }
+        }, 1000);
+    }
+    startTick();
+</script>
+

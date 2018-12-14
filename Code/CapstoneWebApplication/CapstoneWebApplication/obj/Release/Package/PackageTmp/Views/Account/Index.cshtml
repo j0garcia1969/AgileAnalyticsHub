@@ -1,0 +1,88 @@
+﻿@model WebApplicationCapstone.Models.AccountModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <style>
+        .message-welcome {
+            font-family: 'AR BONNIE';
+            font-size: 80px;
+            text-align: center;
+        }
+
+        input[type=text],
+        input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .textfield-login {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .field-validation-error {
+            font-family:Arial;
+            font-size:10px;
+            color:red;
+        }
+
+        .button-login {
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            background-color: #37b3e8;
+            color: #fff;
+            border: 2px solid #37b3e8;
+        }
+
+        .button-login:hover {
+            border: 2px solid gray;
+            background-color: #ccc;
+            color: #333;
+        }
+
+        .container-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-center" id="login-div">
+        <div class="message-welcome">Welcome</div>
+        @using (Html.BeginForm("Authorize", "Account", FormMethod.Post))
+        {
+            @Html.EditorFor(model => model.username, new { htmlAttributes = new { placeholder = "Username" } })
+            @Html.ValidationMessageFor(model => model.username)
+            @Html.EditorFor(model => model.password, new { htmlAttributes = new { placeholder = "Password" } })
+            @Html.ValidationMessageFor(model => model.password)
+            <button type="submit" class="button button-login">Login</button>
+            <label class="field-validation-error">@Html.DisplayFor(model => model.login_error_message)</label>
+        }
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

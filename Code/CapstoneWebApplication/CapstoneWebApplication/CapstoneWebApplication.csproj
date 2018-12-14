@@ -212,7 +212,9 @@
     </Content>
     <Content Include="App_Data\exam_load.csv" />
     <Content Include="App_Data\exam_responses.csv" />
+    <Content Include="App_Data\test_file.csv" />
     <Content Include="App_Data\exam_configuration.csv" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -229,6 +231,7 @@
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -236,7 +239,9 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Experimenter\Assign.cshtml" />
     <Content Include="Views\Experimenter\Configuration.cshtml" />
@@ -246,6 +251,9 @@
     <Content Include="Views\Experimenter\Edit.cshtml" />
     <Content Include="Views\Subject\Text.cshtml" />
     <Content Include="Views\Subject\Complete.cshtml" />
+    <Content Include="Views\Subject\Video.cshtml" />
+    <Content Include="Views\Subject\Audio.cshtml" />
+    <Content Include="Views\Subject\Image.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

@@ -1,0 +1,142 @@
+﻿@model WebApplicationCapstone.Models.ConfigurationModel
+@{
+    ViewBag.Title = "Configuration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        .message-welcome {
+            font-family: 'AR BONNIE';
+            font-size: 80px;
+            text-align: center;
+        }
+
+        input[type=text],
+        input[type=password] {
+            width: 100%;
+            padding: 2px 0px;
+            margin: 0 0;
+            box-sizing: border-box;
+            border: none;
+            /*border-bottom: 1px solid #ccc;*/
+        }
+
+        .textfield-configuration-name {
+            font-family: Arial;
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        .field-validation-error {
+            font-family:Arial;
+            font-size:10px;
+            color:red;
+        }
+
+        .button-login {
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            background-color: #37b3e8;
+            color: #fff;
+            border: 2px solid #37b3e8;
+        }
+
+        .button-login:hover {
+            border: 2px solid gray;
+            background-color: #ccc;
+            color: #333;
+        }
+
+        .container-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+    <h2>Task List</h2>
+    @Html.EditorFor(model => model.Name, "", new { @class = "textfield-configuration-name" })
+    <hr>
+    <br>
+    <p>
+        &nbsp;
+        @Html.ActionLink("Create", "Create", "Experimenter", new { ListTasks = Model.Tasks }, null)
+        &nbsp;
+        &nbsp;
+        @Html.ActionLink("Save", "Create", "Experimenter")
+        &nbsp;
+        &nbsp;
+        @using (Html.BeginForm("AssignConfiguration", "Experimenter", FormMethod.Post))
+        {
+            <input type="submit" value="Assign" />
+        }
+        </p>
+    @using (Html.BeginForm("DisplayTask", "Experimenter", FormMethod.Post))
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tasks[0].SelectedTaskTypeDesc)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tasks[0].TaskItem)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tasks[0].Duration)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tasks[0].SelectedFeedbackTypeDesc)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Tasks != null)
+                {
+                    //foreach (var item in Model.Tasks)
+                    for (int i=0; i < Model.Tasks.Count; i++)
+                    {
+                        if (Model.Tasks[i].TaskItem != null) {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Tasks[i].SelectedTaskTypeDesc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Tasks[i].TaskItem)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Tasks[i].Duration)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Tasks[i].SelectedFeedbackTypeDesc)
+                            </td>
+                            <td>
+                                @*<a href="/Experimenter/Edit/1"> Edit1 </a>*@
+                                @Html.ActionLink("Edit", "Edit", new { id = i }, "Experimenter") |
+                                @Html.ActionLink("Details", "Details", new { id = i }, "Experimenter") |
+                                @Html.ActionLink("Delete", "Delete", new { id = i }, "Experimenter") 
+                                @*<a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>*@
+                            </td>
+                        </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    </body>
+</html>

@@ -38,7 +38,7 @@ namespace CapstoneWebApplication.Subject
 
             string task_type = configuration[task_id].SelectedTaskTypeDesc; // Text, Image, Audio, or Video (Type of task).
             string task_content = configuration[task_id].TaskItem; // Content of (question)
-            int duration = configuration[task_id].Duration; // Duration of task.
+            TimeSpan duration = configuration[task_id].Duration; // Duration of task.
             string feedback_type = configuration[task_id].SelectedFeedbackTypeDesc; // Text, or Image (User response).
 
             Label_Value.Text = task_content;
@@ -221,7 +221,7 @@ namespace CapstoneWebApplication.Subject
 
             string task_type = configuration[task_id].SelectedTaskTypeDesc; // Text, Image, Audio, or Video (Type of task).
             string task_content = configuration[task_id].TaskItem; // Content of (question)
-            int duration = configuration[task_id].Duration; // Duration of task.
+            TimeSpan duration = configuration[task_id].Duration; // Duration of task.
             string feedback_type = configuration[task_id].SelectedFeedbackTypeDesc; // Text, or Image (User response).
 
             if (task_type == "Text") {
